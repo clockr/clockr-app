@@ -1,0 +1,6 @@
+{
+  "appTitle": "Clockr",
+  "error": {
+    "nullable": "Dieses Feld darf nicht leer sein."
+  }
+}
