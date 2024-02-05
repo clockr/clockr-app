@@ -1,9 +1,9 @@
-import { getCookie, deleteCookie, setCookie } from 'cookies-next';
+import { Cookies } from 'react-cookie';
 
 export const setAuthCookie = (token: string, expires_in: number) => {
-  const toBase64 = Buffer.from(token).toString('base64');
+  const cookies = new Cookies(null, { path: '/' });
 
-  setCookie('auth_token', toBase64, {
+  cookies.set('auth_token', token, {
     maxAge: expires_in,
     path: '/',
     sameSite: 'strict',
@@ -12,21 +12,18 @@ export const setAuthCookie = (token: string, expires_in: number) => {
 };
 
 const getAuthCookie = (name: string) => {
-  const cookie = getCookie(name);
-
-  if (!cookie) return undefined;
-
-  return Buffer.from(cookie, 'base64').toString('ascii');
+  const cookies = new Cookies(null, { path: '/' });
+  return cookies.get(name);
 };
 
 export const getValidAuthToken = () => {
   const token = getAuthCookie('auth_token');
-
   return {
     token: token,
   };
 };
 
 export const removeCookie = (cookie: string) => {
-  deleteCookie(cookie);
+  const cookies = new Cookies(null, { path: '/' });
+  cookies.remove(cookie);
 };

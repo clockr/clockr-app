@@ -1,31 +1,51 @@
-import {Container, Nav, NavDropdown} from "react-bootstrap";
+import { Nav, Navbar } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/hooks';
+import { logout } from '../../redux/slices/authSlice';
+import IsLoggedIn from '../auth/IsLoggedIn';
+import HasRole from '../auth/HasRole';
 
-const Navbar = () => {
+const TopNav = () => {
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+    <Navbar
+      expand="lg"
+      className="bg-dark"
+      data-bs-theme="dark"
+      variant="primary"
+    >
+      <div className="container">
+        <Link to="/" className="navbar-brand">
+          {process.env.REACT_APP_TITLE}
+        </Link>
+        <IsLoggedIn>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <NavLink to="/" className="nav-link">
+                Arbeitszeit
+              </NavLink>
+              <HasRole role="ROLE_ADMIN">
+                <NavLink to="/users" className="nav-link">
+                  Benutzer
+                </NavLink>
+              </HasRole>
+            </Nav>
+            <Nav>
+              <Link to="/login" onClick={handleLogout} className="nav-link">
+                Abmelden
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
+        </IsLoggedIn>
+      </div>
     </Navbar>
-    )
+  );
 };
 
-export default Navbar;
+export default TopNav;

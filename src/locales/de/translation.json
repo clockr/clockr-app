@@ -1,6 +1,7 @@
 {
   "appTitle": "Clockr",
   "error": {
-    "nullable": "Dieses Feld darf nicht leer sein."
+    "nullable": "Dieses Feld darf nicht leer sein.",
+    "unique": "Ein Eintrag mit diesem Wert ist bereits vorhanden."
   }
 }
