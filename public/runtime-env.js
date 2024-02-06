@@ -1,0 +1,1 @@
+window.__RUNTIME_CONFIG__ = {"REACT_APP_API_URL":"https://example.com","REACT_APP_TITLE":"CLOCKR"};
