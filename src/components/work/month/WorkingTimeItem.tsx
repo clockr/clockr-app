@@ -28,7 +28,14 @@ function convertToHours(timeString) {
   return hours + minutes / 60;
 }
 
-const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
+const WorkingTimeItem = ({
+  item,
+  userId,
+  date,
+  addItem,
+  showAddItem,
+  handleEmptyDelete,
+}) => {
   const [doCreateWorkingTime, { isLoading: isLoadingCreate }] =
     useCreateWorkingTimeMutation();
   const [doUpdateWorkingTime, { isLoading: isLoadingUpdate }] =
@@ -119,12 +126,27 @@ const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
   };
 
   const handleDelete = () => {
-    if (!item.id) return;
-    doDeleteWorkingTime({ userId: userId, id: item.id });
+    if (item.id) {
+      doDeleteWorkingTime({ userId: userId, id: item.id });
+    }
+    if (handleEmptyDelete) {
+      handleEmptyDelete(item.uuid);
+    }
   };
 
   return (
     <div className="d-flex align-items-center">
+      <div style={{ minWidth: '30px' }}>
+        {showAddItem ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-link"
+            onClick={addItem}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        ) : null}
+      </div>
       <input
         type="time"
         className="form-control form-control-sm"
@@ -158,27 +180,16 @@ const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
         onChange={(e) => setFormValue('note', e.target.value)}
         onBlur={handlePrepareSave}
       />
-      <div className="ms-3" style={{ minWidth: 100 }}>
-        <div className="btn-group btn-group-sm">
-          {item.id ? (
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-warning"
-              onClick={handleDelete}
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          ) : null}
-          {showAddItem ? (
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-primary"
-              onClick={addItem}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          ) : null}
-        </div>
+      <div className="ms-2" style={{ minWidth: 100 }}>
+        {item.id || handleEmptyDelete ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-link text-warning"
+            onClick={handleDelete}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        ) : null}
       </div>
       <div className="ms-2">
         <FontAwesomeIcon
