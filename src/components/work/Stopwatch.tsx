@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WorkingTimeType } from '../../types/WorkingTimeType';
 import {
   useCreateWorkingTimeMutation,
@@ -9,6 +9,7 @@ import { intervalToDuration } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStop, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { setWorkingTimeItem } from '../../redux/slices/stopwatchSlice';
+import { Helmet } from 'react-helmet';
 
 const Stopwatch = () => {
   const { id: userId } = useAppSelector((state) => state.auth);
@@ -86,6 +87,12 @@ const Stopwatch = () => {
 
   return (
     <div className="Stopwatch d-flex">
+      <Helmet>
+        <title>
+          {workingTime ? elapsedTime + ' - ' : ''}
+          {process.env.REACT_APP_TITLE}
+        </title>
+      </Helmet>
       <button
         onClick={toggleWorkingTime}
         disabled={isLoadingCreate || isLoadingUpdate}
