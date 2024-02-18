@@ -2,7 +2,14 @@ import { useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
 import FieldError from './FieldError';
 
-const TextInput = ({ label, value, onChange, type = 'text', error = null }) => {
+const TextInput = ({
+  label,
+  value,
+  onChange,
+  type = 'text',
+  error = null,
+  ...otherProps
+}) => {
   const id = useMemo(() => uuid(), []);
 
   return (
@@ -14,6 +21,7 @@ const TextInput = ({ label, value, onChange, type = 'text', error = null }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder=""
+        {...otherProps}
       />
       <label htmlFor={id}>{label}</label>
       <FieldError error={error} />
