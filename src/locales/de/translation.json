@@ -8,5 +8,11 @@
     "minSize": {
       "notmet": "Die Eingabe ist zu kurz."
     }
+  },
+  "manualEntry": {
+    "type": {
+      "WORKING_TIME": "Arbeitsstunden",
+      "VACATION": "Urlaubstage"
+    }
   }
 }
