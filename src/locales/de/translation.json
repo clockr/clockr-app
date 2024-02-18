@@ -2,6 +2,17 @@
   "appTitle": "Clockr",
   "error": {
     "nullable": "Dieses Feld darf nicht leer sein.",
-    "unique": "Ein Eintrag mit diesem Wert ist bereits vorhanden."
+    "unique": "Ein Eintrag mit diesem Wert ist bereits vorhanden.",
+    "validUntil": "Dein Link ist bereits abgelaufen. Bitte fordere einen neuen an.",
+    "match": "Die Eingaben stimmen nicht überein.",
+    "minSize": {
+      "notmet": "Die Eingabe ist zu kurz."
+    }
+  },
+  "manualEntry": {
+    "type": {
+      "WORKING_TIME": "Arbeitsstunden",
+      "VACATION": "Urlaubstage"
+    }
   }
 }

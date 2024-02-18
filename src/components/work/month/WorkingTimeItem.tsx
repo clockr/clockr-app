@@ -10,9 +10,10 @@ import {
   faSpinner,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { addDays, format, getHours, getMinutes, parse } from 'date-fns';
 import { convertFloatToTimeString } from '../../../lib/date';
+import { useAppSelector } from '../../../redux/hooks';
 
 // Function to convert HH:mm string to hours as float
 function convertToHours(timeString) {
@@ -28,7 +29,17 @@ function convertToHours(timeString) {
   return hours + minutes / 60;
 }
 
-const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
+const WorkingTimeItem = ({
+  item,
+  userId,
+  date,
+  addItem,
+  showAddItem,
+  handleEmptyDelete,
+}) => {
+  const { workingTimeItem: itemFromStopwatchState } = useAppSelector(
+    (state) => state.stopwatch,
+  );
   const [doCreateWorkingTime, { isLoading: isLoadingCreate }] =
     useCreateWorkingTimeMutation();
   const [doUpdateWorkingTime, { isLoading: isLoadingUpdate }] =
@@ -119,18 +130,40 @@ const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
   };
 
   const handleDelete = () => {
-    if (!item.id) return;
-    doDeleteWorkingTime({ userId: userId, id: item.id });
+    if (item.id) {
+      doDeleteWorkingTime({ userId: userId, id: item.id });
+    }
+    if (handleEmptyDelete) {
+      handleEmptyDelete(item.uuid);
+    }
   };
+
+  const isDisabled = useMemo(() => {
+    return itemFromStopwatchState?.id && item?.id
+      ? itemFromStopwatchState.id === item.id
+      : false;
+  }, [item?.id, itemFromStopwatchState?.id]);
 
   return (
     <div className="d-flex align-items-center">
+      <div style={{ minWidth: '30px' }}>
+        {showAddItem ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-link"
+            onClick={addItem}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        ) : null}
+      </div>
       <input
         type="time"
         className="form-control form-control-sm"
         value={formValues.startAt}
         onChange={(e) => setFormValue('startAt', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <div className="mx-2">-</div>
       <input
@@ -139,6 +172,7 @@ const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
         value={formValues.endAt}
         onChange={(e) => setFormValue('endAt', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <div className="ms-3 me-2">
         <FontAwesomeIcon icon={faCoffee} className="text-muted" />
@@ -149,6 +183,7 @@ const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
         value={formValues.breakTime}
         onChange={(e) => setFormValue('breakTime', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <input
         type="text"
@@ -157,28 +192,18 @@ const WorkingTimeItem = ({ item, userId, date, addItem, showAddItem }) => {
         value={formValues.note}
         onChange={(e) => setFormValue('note', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
-      <div className="ms-3" style={{ minWidth: 100 }}>
-        <div className="btn-group btn-group-sm">
-          {item.id ? (
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-warning"
-              onClick={handleDelete}
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          ) : null}
-          {showAddItem ? (
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-primary"
-              onClick={addItem}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          ) : null}
-        </div>
+      <div className="ms-2" style={{ minWidth: 100 }}>
+        {!isDisabled && (item.id || handleEmptyDelete) ? (
+          <button
+            type="button"
+            className="btn btn-sm btn-link text-warning"
+            onClick={handleDelete}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        ) : null}
       </div>
       <div className="ms-2">
         <FontAwesomeIcon

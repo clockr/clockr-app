@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../redux/hooks';
 import { logout } from '../../redux/slices/authSlice';
 import IsLoggedIn from '../auth/IsLoggedIn';
 import HasRole from '../auth/HasRole';
+import Stopwatch from '../work/Stopwatch';
 
 const TopNav = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,9 @@ const TopNav = () => {
         <Link to="/" className="navbar-brand">
           {process.env.REACT_APP_TITLE}
         </Link>
+        <div className="d-lg-none">
+          <Stopwatch />
+        </div>
         <IsLoggedIn>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -37,6 +41,9 @@ const TopNav = () => {
               </HasRole>
             </Nav>
             <Nav>
+              <div className="me-3 d-none d-lg-block">
+                <Stopwatch />
+              </div>
               <Link to="/login" onClick={handleLogout} className="nav-link">
                 Abmelden
               </Link>

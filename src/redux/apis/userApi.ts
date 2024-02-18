@@ -18,7 +18,31 @@ export const userApi = appApi.injectEndpoints({
       transformResponse: (response: { data: any }, meta, arg) => response.data,
       providesTags: (result, error, arg) => [{ type: 'USER_YEAR' }],
     }),
+    forgotPassword: builder.mutation<boolean, string>({
+      query: (username) => ({
+        url: `/user/forgot-password/${username}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: { data: boolean }, meta, arg) =>
+        response.data,
+    }),
+    setPassword: builder.mutation<boolean, { token: string; password: string }>(
+      {
+        query: (payload) => ({
+          url: '/user/set-password',
+          method: 'POST',
+          body: payload,
+        }),
+        transformResponse: (response: { data: boolean }, meta, arg) =>
+          response.data,
+      },
+    ),
   }),
 });
 
-export const { useGetMonthQuery, useGetYearQuery } = userApi;
+export const {
+  useGetMonthQuery,
+  useGetYearQuery,
+  useForgotPasswordMutation,
+  useSetPasswordMutation,
+} = userApi;

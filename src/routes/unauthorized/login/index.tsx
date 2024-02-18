@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TextInput from '../../../components/form/TextInput';
 import { useLoginMutation } from '../../../redux/apis/authApi';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GeneralError from '../../../components/form/GeneralError';
 
 const Login = () => {
@@ -62,7 +62,10 @@ const Login = () => {
                 <GeneralError message="Beim Anmelden ist ein Fehler auftreten. Bitte überprüfe deine Daten und versuche es erneut." />
               ) : null}
             </div>
-            <div className="card-footer text-end">
+            <div className="card-footer d-flex align-items-center">
+              <Link to="/forgotPassword" className="me-auto">
+                Passwort vergessen?
+              </Link>
               <button
                 type="submit"
                 className="btn btn-primary"

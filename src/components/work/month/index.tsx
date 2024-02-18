@@ -15,7 +15,7 @@ const Month = ({ userId, year, month }) => {
           <thead>
             <tr>
               <th>Datum</th>
-              <th>Arbeitszeit</th>
+              <th style={{ paddingLeft: '40px' }}>Arbeitszeit</th>
               <th>Urlaub</th>
               <th>Krank</th>
               <th>Frühstück</th>
