@@ -31,17 +31,23 @@ const WorkingTimeItems = ({ userId, day }) => {
   return day ? (
     <div>
       {items?.length > 0 ? (
-        items?.map((item, iI) => (
-          <WorkingTimeItem
-            item={item}
-            userId={userId}
-            date={new Date(day.date)}
-            key={iI}
-            addItem={addItem}
-            showAddItem={iI === items.length - 1 && item?.id}
-            handleEmptyDelete={removeItem}
-          />
-        ))
+        items
+          ?.slice()
+          ?.sort(
+            (a, b) =>
+              new Date(a.startAt)?.getTime() - new Date(b.startAt)?.getTime(),
+          )
+          ?.map((item, iI) => (
+            <WorkingTimeItem
+              item={item}
+              userId={userId}
+              date={new Date(day.date)}
+              key={iI}
+              addItem={addItem}
+              showAddItem={iI === items.length - 1 && item?.id}
+              handleEmptyDelete={removeItem}
+            />
+          ))
       ) : (
         <div style={{ minWidth: '30px' }}>
           <button

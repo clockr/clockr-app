@@ -10,9 +10,10 @@ import {
   faSpinner,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { addDays, format, getHours, getMinutes, parse } from 'date-fns';
 import { convertFloatToTimeString } from '../../../lib/date';
+import { useAppSelector } from '../../../redux/hooks';
 
 // Function to convert HH:mm string to hours as float
 function convertToHours(timeString) {
@@ -36,6 +37,9 @@ const WorkingTimeItem = ({
   showAddItem,
   handleEmptyDelete,
 }) => {
+  const { workingTimeItem: itemFromStopwatchState } = useAppSelector(
+    (state) => state.stopwatch,
+  );
   const [doCreateWorkingTime, { isLoading: isLoadingCreate }] =
     useCreateWorkingTimeMutation();
   const [doUpdateWorkingTime, { isLoading: isLoadingUpdate }] =
@@ -134,6 +138,12 @@ const WorkingTimeItem = ({
     }
   };
 
+  const isDisabled = useMemo(() => {
+    return itemFromStopwatchState?.id && item?.id
+      ? itemFromStopwatchState.id === item.id
+      : false;
+  }, [item?.id, itemFromStopwatchState?.id]);
+
   return (
     <div className="d-flex align-items-center">
       <div style={{ minWidth: '30px' }}>
@@ -153,6 +163,7 @@ const WorkingTimeItem = ({
         value={formValues.startAt}
         onChange={(e) => setFormValue('startAt', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <div className="mx-2">-</div>
       <input
@@ -161,6 +172,7 @@ const WorkingTimeItem = ({
         value={formValues.endAt}
         onChange={(e) => setFormValue('endAt', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <div className="ms-3 me-2">
         <FontAwesomeIcon icon={faCoffee} className="text-muted" />
@@ -171,6 +183,7 @@ const WorkingTimeItem = ({
         value={formValues.breakTime}
         onChange={(e) => setFormValue('breakTime', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <input
         type="text"
@@ -179,9 +192,10 @@ const WorkingTimeItem = ({
         value={formValues.note}
         onChange={(e) => setFormValue('note', e.target.value)}
         onBlur={handlePrepareSave}
+        disabled={isDisabled}
       />
       <div className="ms-2" style={{ minWidth: 100 }}>
-        {item.id || handleEmptyDelete ? (
+        {!isDisabled && (item.id || handleEmptyDelete) ? (
           <button
             type="button"
             className="btn btn-sm btn-link text-warning"

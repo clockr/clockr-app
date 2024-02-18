@@ -4,13 +4,16 @@ import {
   useCreateWorkingTimeMutation,
   useUpdateWorkingTimeMutation,
 } from '../../redux/apis/workingTimeApi';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { intervalToDuration } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStop, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { setWorkingTimeItem } from '../../redux/slices/stopwatchSlice';
 
 const Stopwatch = () => {
   const { id: userId } = useAppSelector((state) => state.auth);
+  const { workingTimeItem } = useAppSelector((state) => state.stopwatch);
+  const dispatch = useAppDispatch();
   const [doCreateWorkingTime, { isLoading: isLoadingCreate }] =
     useCreateWorkingTimeMutation();
   const [doUpdateWorkingTime, { isLoading: isLoadingUpdate }] =
@@ -18,6 +21,12 @@ const Stopwatch = () => {
 
   const [workingTime, setWorkingTime] = useState<WorkingTimeType>(null);
   const [elapsedTime, setElapsedTime] = useState<string>('');
+
+  useEffect(() => {
+    if (workingTimeItem && !workingTime?.id) {
+      setWorkingTime(workingTimeItem);
+    }
+  }, [workingTime?.id, workingTimeItem]);
 
   useEffect(() => {
     if (workingTime?.startAt) {
@@ -56,6 +65,7 @@ const Stopwatch = () => {
         .unwrap()
         .then(() => {
           setWorkingTime(null);
+          dispatch(setWorkingTimeItem(null));
         });
     } else {
       doCreateWorkingTime({
@@ -69,6 +79,7 @@ const Stopwatch = () => {
         .then((response) => {
           setElapsedTime('00:00:00');
           setWorkingTime(response);
+          dispatch(setWorkingTimeItem(response));
         });
     }
   };
