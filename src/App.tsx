@@ -10,6 +10,7 @@ import SetPassword from './routes/unauthorized/setPassword';
 import ForgotPassword from './routes/unauthorized/forgotPassword';
 import IsLoggedIn from './components/auth/IsLoggedIn';
 import { Helmet } from 'react-helmet';
+import config from "./config/config";
 
 const routes = createBrowserRouter([
   {
@@ -64,7 +65,7 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <title>{process.env.REACT_APP_TITLE}</title>
+        <title>{config.APP_TITLE}</title>
       </Helmet>
       <RouterProvider router={routes} />
     </div>

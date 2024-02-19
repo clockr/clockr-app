@@ -1,5 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { getValidAuthToken } from '../lib/cookies';
+import config from "../config/config";
 
 const customFetchBaseQuery = (baseUrl, prepareHeaders) => {
   const baseQuery = fetchBaseQuery({ baseUrl, prepareHeaders });
@@ -19,7 +20,7 @@ const customFetchBaseQuery = (baseUrl, prepareHeaders) => {
 };
 
 export const baseQuery = customFetchBaseQuery(
-  `${process.env.REACT_APP_API_URL}/api`,
+  `${config.API_URL}/api`,
   (headers, { getState, dispatch }) => {
     // @ts-ignore
     const { token } = getValidAuthToken();
