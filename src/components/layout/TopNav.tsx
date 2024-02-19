@@ -5,6 +5,7 @@ import { logout } from '../../redux/slices/authSlice';
 import IsLoggedIn from '../auth/IsLoggedIn';
 import HasRole from '../auth/HasRole';
 import Stopwatch from '../work/Stopwatch';
+import config from "../../config/config";
 
 const TopNav = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,7 @@ const TopNav = () => {
     >
       <div className="container">
         <Link to="/" className="navbar-brand">
-          {process.env.REACT_APP_TITLE}
+          {config.REACT_APP_TITLE}
         </Link>
         <div className="d-lg-none">
           <Stopwatch />

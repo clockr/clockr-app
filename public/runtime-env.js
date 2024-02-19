@@ -1,1 +1,1 @@
-window.__RUNTIME_CONFIG__ = {"REACT_APP_API_URL":"https://example.com","REACT_APP_TITLE":"CLOCKR"};
+window.__RUNTIME_CONFIG__ = {"REACT_APP_API_URL":"http://localhost:8080","REACT_APP_TITLE":"CLOCKR","DB_NAME":"clockr","DB_HOST":"mariadb","DB_USER":"mariadbu","DB_PASSWORD":"mariadbpw","INIT_ADMIN_MAIL":"admin@example.org","INIT_ADMIN_PASSWORD":"admin","GRAILS_JWT_SECRET":"adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin","REACT_APP_NAME":"CLOCKR","MYSQL_ROOT_PASSWORD":"2388wii"};

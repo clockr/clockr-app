@@ -20,7 +20,7 @@ const customFetchBaseQuery = (baseUrl, prepareHeaders) => {
 };
 
 export const baseQuery = customFetchBaseQuery(
-  `${config.API_URL}/api`,
+  `${config.REACT_APP_API_URL}/api`,
   (headers, { getState, dispatch }) => {
     // @ts-ignore
     const { token } = getValidAuthToken();

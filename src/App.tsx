@@ -65,7 +65,7 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <title>{config.APP_TITLE}</title>
+        <title>{config.REACT_APP_TITLE}</title>
       </Helmet>
       <RouterProvider router={routes} />
     </div>
