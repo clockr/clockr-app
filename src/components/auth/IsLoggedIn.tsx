@@ -4,13 +4,13 @@ import { RootState } from '../../redux/store';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const IsLoggedIn = ({ children }) => {
+const IsLoggedIn = ({ children, withNavigate = false }) => {
   const { username } = useAppSelector((state: RootState) => state.auth);
   const { token } = getValidAuthToken();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!username || !token) {
+    if (withNavigate && (!username || !token)) {
       navigate('/login');
     }
   }, [username, token, navigate]);

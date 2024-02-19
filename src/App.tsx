@@ -18,14 +18,6 @@ const routes = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: '/',
-        element: (
-          <IsLoggedIn>
-            <Work />
-          </IsLoggedIn>
-        ),
-      },
-      {
         path: '/login',
         element: <Login />,
       },
@@ -44,7 +36,7 @@ const routes = createBrowserRouter([
       {
         path: '/users',
         element: (
-          <IsLoggedIn>
+          <IsLoggedIn withNavigate>
             <Users />
           </IsLoggedIn>
         ),
@@ -52,8 +44,16 @@ const routes = createBrowserRouter([
       {
         path: '/users/:id',
         element: (
-          <IsLoggedIn>
+          <IsLoggedIn withNavigate>
             <User />
+          </IsLoggedIn>
+        ),
+      },
+      {
+        path: '/',
+        element: (
+          <IsLoggedIn withNavigate>
+            <Work />
           </IsLoggedIn>
         ),
       },
