@@ -2,6 +2,8 @@ import { useGetYearQuery } from '../../../redux/apis/userApi';
 import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { convertFloatToTimeString } from '../../../lib/date';
+import ManualEntries from './ManualEntries';
+import HasRole from '../../auth/HasRole';
 
 const Year = ({ userId, year }) => {
   const { data } = useGetYearQuery({ id: userId, year: year });
@@ -82,6 +84,13 @@ const Year = ({ userId, year }) => {
           </table>
         </div>
       </div>
+      <HasRole role="ROLE_ADMIN">
+        <div className="row mt-4">
+          <div className="col-12 col-mg-6 col-lg-4">
+            <ManualEntries userId={userId} year={year} />
+          </div>
+        </div>
+      </HasRole>
     </div>
   ) : null;
 };

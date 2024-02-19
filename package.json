@@ -1,6 +1,6 @@
 {
   "name": "clockr-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "license": "MIT",
   "author": {
@@ -29,6 +29,7 @@
     "react-bootstrap": "^2.10.0",
     "react-cookie": "^7.0.1",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-i18next": "^14.0.1",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.21.3",

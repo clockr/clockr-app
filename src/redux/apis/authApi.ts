@@ -8,7 +8,7 @@ export const authApi = appApi.injectEndpoints({
       { username: string; password: string }
     >({
       query: ({ username, password }) => ({
-        url: '/api/login',
+        url: '/login',
         method: 'POST',
         body: {
           username,

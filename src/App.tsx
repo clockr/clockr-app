@@ -6,27 +6,55 @@ import Login from './routes/unauthorized/login';
 import Work from './routes/authorized/work';
 import Users from './routes/authorized/users';
 import User from './routes/authorized/users/user';
+import SetPassword from './routes/unauthorized/setPassword';
+import ForgotPassword from './routes/unauthorized/forgotPassword';
+import IsLoggedIn from './components/auth/IsLoggedIn';
+import { Helmet } from 'react-helmet';
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
     children: [
       {
         path: '/',
-        element: <Work />,
+        element: (
+          <IsLoggedIn>
+            <Work />
+          </IsLoggedIn>
+        ),
       },
       {
         path: '/login',
         element: <Login />,
       },
       {
+        path: '/forgotPassword',
+        element: <ForgotPassword />,
+      },
+      {
+        path: '/resetPassword/:token',
+        element: <SetPassword />,
+      },
+      {
+        path: '/register/:token',
+        element: <SetPassword />,
+      },
+      {
         path: '/users',
-        element: <Users />,
+        element: (
+          <IsLoggedIn>
+            <Users />
+          </IsLoggedIn>
+        ),
       },
       {
         path: '/users/:id',
-        element: <User />,
+        element: (
+          <IsLoggedIn>
+            <User />
+          </IsLoggedIn>
+        ),
       },
     ],
   },
@@ -35,7 +63,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <Helmet>
+        <title>{process.env.REACT_APP_TITLE}</title>
+      </Helmet>
+      <RouterProvider router={routes} />
     </div>
   );
 }
