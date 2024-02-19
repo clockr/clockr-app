@@ -19,11 +19,11 @@ const Year = ({ userId, year }) => {
                 <td>{data.overview.vacationDays}</td>
               </tr>
               <tr>
-                <td>Resturlaub aus {year - 1}</td>
+                <td>Urlaub aus {year - 1}</td>
                 <td>{data.overview.vacationOffset}</td>
               </tr>
               <tr>
-                <td>Überstunden aus {year - 1}</td>
+                <td>Stunden aus {year - 1}</td>
                 <td>
                   {convertFloatToTimeString(data.overview.workingHoursOffset)}
                 </td>
