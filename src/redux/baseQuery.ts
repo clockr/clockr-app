@@ -1,19 +1,30 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { getValidAuthToken } from '../lib/cookies';
+import { authApi } from './apis/authApi';
 
 const customFetchBaseQuery = (baseUrl, prepareHeaders) => {
   const baseQuery = fetchBaseQuery({ baseUrl, prepareHeaders });
 
   return async (endpoint, body, extraOptions) => {
-    const response = await baseQuery(endpoint, body, extraOptions);
+    let response = await baseQuery(endpoint, body, extraOptions);
 
     if (response.error && response.error.status === 401) {
-      if (window.location.href?.indexOf('/login') === -1) {
-        window.location.href = '/login';
+      if (endpoint.url?.indexOf('/oauth/access_token') === -1) {
+        const refreshResponse = await body.dispatch(
+          authApi.endpoints.refresh.initiate(
+            body.getState().auth.refresh_token,
+          ),
+        );
+        if (refreshResponse.data) {
+          response = await baseQuery(endpoint, body, extraOptions);
+          return response;
+        } else {
+          body.dispatch({ type: 'auth/logout' });
+        }
+      } else {
+        body.dispatch({ type: 'auth/logout' });
       }
-      body.dispatch({ type: 'auth/logout' });
     }
-
     return response;
   };
 };

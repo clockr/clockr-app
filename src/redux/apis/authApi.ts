@@ -8,7 +8,7 @@ export const authApi = appApi.injectEndpoints({
       { username: string; password: string }
     >({
       query: ({ username, password }) => ({
-        url: '/api/login',
+        url: '/login',
         method: 'POST',
         body: {
           username,
@@ -16,7 +16,13 @@ export const authApi = appApi.injectEndpoints({
         },
       }),
     }),
+    refresh: builder.mutation<any, string>({
+      query: (refreshToken) => ({
+        url: `/oauth/access_token?grant_type=refresh_token&refresh_token=${refreshToken}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useRefreshMutation } = authApi;
