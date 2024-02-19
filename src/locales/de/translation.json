@@ -14,5 +14,23 @@
       "WORKING_TIME": "Arbeitsstunden",
       "VACATION": "Urlaubstage"
     }
+  },
+  "germanStates": {
+    "BE": "Berlin",
+    "BB": "Brandenburg",
+    "BW": "Baden-Württemberg",
+    "BY": "Bayern",
+    "HE": "Hessen",
+    "MV": "Mecklenburg-Vorpommern",
+    "NW": "Nordrhein-Westfalen",
+    "RP": "Rheinland-Pfalz",
+    "SL": "Saarland",
+    "SN": "Sachsen",
+    "ST": "Sachsen-Anhalt",
+    "TH": "Thüringen",
+    "SH": "Schleswig-Holstein",
+    "HH": "Hamburg",
+    "HB": "Bremen",
+    "NI": "Niedersachsen"
   }
 }

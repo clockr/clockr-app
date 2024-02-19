@@ -1,4 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 const ShowUserData = ({ user }) => {
+  const { t } = useTranslation();
   return user ? (
     <table className="table">
       <tbody>
@@ -13,6 +16,10 @@ const ShowUserData = ({ user }) => {
         <tr>
           <td>Vorname</td>
           <td>{user.firstname}</td>
+        </tr>
+        <tr>
+          <td>Bundesland</td>
+          <td>{t(`germanStates.${user.germanState}`)}</td>
         </tr>
       </tbody>
     </table>

@@ -5,6 +5,7 @@ export type UserType = {
   username: string;
   firstname?: string;
   lastname?: string;
+  germanState?: string;
   enabled?: boolean;
   contracts?: ContractType[];
 };

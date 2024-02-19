@@ -2,14 +2,19 @@ import { useState } from 'react';
 import { useCreateUserMutation } from '../../../redux/apis/userManagementApi';
 import { Modal } from 'react-bootstrap';
 import TextInput from '../../../components/form/TextInput';
+import germanStates from '../../../config/germanStates';
+import SelectInput from '../../../components/form/SelectInput';
+import { useTranslation } from 'react-i18next';
 
 const CreateUser = () => {
+  const { t } = useTranslation();
   const [doCreateUser, { isLoading }] = useCreateUserMutation();
 
   const defaultFormValues = {
     username: '',
     firstname: '',
     lastname: '',
+    germanState: 'MV',
     enabled: true,
   };
 
@@ -82,6 +87,16 @@ const CreateUser = () => {
               label="Nachname"
               type="text"
               error={errors?.lastname}
+            />
+            <SelectInput
+              value={formValues.germanState}
+              onChange={(val) => setFormValue('germanState', val)}
+              label="Bundesland"
+              error={errors?.germanState}
+              options={germanStates.map((state) => ({
+                value: state,
+                label: t(`germanStates.${state}`),
+              }))}
             />
           </Modal.Body>
           <Modal.Footer>
