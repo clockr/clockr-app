@@ -25,10 +25,10 @@ const TopNav = () => {
         <Link to="/" className="navbar-brand">
           {config.REACT_APP_TITLE}
         </Link>
-        <div className="d-lg-none">
-          <Stopwatch />
-        </div>
         <IsLoggedIn>
+          <div className="d-lg-none">
+            <Stopwatch />
+          </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

@@ -23,6 +23,14 @@ const slice = createSlice({
         return other;
       },
     );
+    builder.addMatcher(
+      authApi.endpoints.refresh.matchFulfilled,
+      (_state, { payload }) => {
+        const { access_token, ...other } = payload;
+        setAuthCookie(access_token, other.expires_in);
+        return other;
+      },
+    );
   },
 });
 
