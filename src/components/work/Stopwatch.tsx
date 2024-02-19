@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStop, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { setWorkingTimeItem } from '../../redux/slices/stopwatchSlice';
 import { Helmet } from 'react-helmet';
+import config from "../../config/config";
 
 const Stopwatch = () => {
   const { id: userId } = useAppSelector((state) => state.auth);
@@ -90,7 +91,7 @@ const Stopwatch = () => {
       <Helmet>
         <title>
           {workingTime ? elapsedTime + ' - ' : ''}
-          {process.env.REACT_APP_TITLE}
+          {config.REACT_APP_TITLE}
         </title>
       </Helmet>
       <button
