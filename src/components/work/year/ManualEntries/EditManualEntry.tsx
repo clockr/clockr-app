@@ -7,10 +7,12 @@ import { faPencil, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import TextInput from '../../../form/TextInput';
 import SelectInput from '../../../form/SelectInput';
+import { useTranslation } from 'react-i18next';
 
 const availableTypes = ['WORKING_TIME', 'VACATION'];
 
 const EditManualEntry = ({ manualEntry }) => {
+  const { t } = useTranslation();
   const [doUpdateManualEntry, { isLoading }] = useUpdateManualEntryMutation();
 
   const defaultFormValues = {
@@ -99,7 +101,7 @@ const EditManualEntry = ({ manualEntry }) => {
               error={errors?.type}
               options={availableTypes?.map((type) => ({
                 value: type,
-                label: type,
+                label: t(`manualEntry.type.${type}`),
               }))}
             />
             <TextInput

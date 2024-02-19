@@ -4,14 +4,19 @@ import { useState } from 'react';
 import { useUpdateUserMutation } from '../../../../redux/apis/userManagementApi';
 import { Modal } from 'react-bootstrap';
 import TextInput from '../../../../components/form/TextInput';
+import germanStates from '../../../../config/germanStates';
+import SelectInput from '../../../../components/form/SelectInput';
+import { useTranslation } from 'react-i18next';
 
 const EditUser = ({ user }) => {
+  const { t } = useTranslation();
   const [doUpdateUser, { isLoading }] = useUpdateUserMutation();
 
   const defaultFormValues = {
     username: '',
     firstname: '',
     lastname: '',
+    germanState: '',
     enabled: true,
   };
 
@@ -25,6 +30,7 @@ const EditUser = ({ user }) => {
       username: user.username,
       firstname: user.firstname,
       lastname: user.lastname,
+      germanState: user.germanState ?? 'MV',
     });
     setErrors(null);
     setOpen(true);
@@ -85,6 +91,16 @@ const EditUser = ({ user }) => {
               label="Nachname"
               type="text"
               error={errors?.lastname}
+            />
+            <SelectInput
+              value={formValues.germanState}
+              onChange={(val) => setFormValue('germanState', val)}
+              label="Bundesland"
+              error={errors?.germanState}
+              options={germanStates.map((state) => ({
+                value: state,
+                label: t(`germanStates.${state}`),
+              }))}
             />
           </Modal.Body>
           <Modal.Footer>
