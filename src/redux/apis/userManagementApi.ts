@@ -44,6 +44,8 @@ export const userManagementApi = appApi.injectEndpoints({
       invalidatesTags: (result, error, arg) => [
         { type: 'USER_MANAGEMENT_USER_LIST', id: 'LIST' },
         { type: 'USER_MANAGEMENT_USER', id: arg.id },
+        { type: 'USER_MONTH' },
+        { type: 'USER_YEAR' },
       ],
     }),
     deleteUser: builder.mutation<boolean, number>({
