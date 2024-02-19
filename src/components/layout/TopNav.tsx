@@ -24,9 +24,11 @@ const TopNav = () => {
         <Link to="/" className="navbar-brand">
           {process.env.REACT_APP_TITLE}
         </Link>
-        <div className="d-lg-none">
-          <Stopwatch />
-        </div>
+        <IsLoggedIn>
+          <div className="d-lg-none">
+            <Stopwatch />
+          </div>
+        </IsLoggedIn>
         <IsLoggedIn>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
