@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStop, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { setWorkingTimeItem } from '../../redux/slices/stopwatchSlice';
 import { Helmet } from 'react-helmet';
-import config from "../../config/config";
+import config from '../../config/config';
 
 const Stopwatch = () => {
   const { id: userId } = useAppSelector((state) => state.auth);

@@ -57,8 +57,12 @@ const Year = ({ userId, year }) => {
                     locale: de,
                   })}
                 </td>
-                <td>{convertFloatToTimeString(month.hoursPerWeek)}</td>
-                <td>{month.daysPerWeek}</td>
+                <td>
+                  {month.hoursPerWeek
+                    ?.map((h) => convertFloatToTimeString(h))
+                    ?.join('/')}
+                </td>
+                <td>{month.daysPerWeek?.join('/')}</td>
                 <td>{convertFloatToTimeString(month.targetHours)}</td>
                 <td>{month.vacationCount}</td>
                 <td>{month.illnessCount}</td>

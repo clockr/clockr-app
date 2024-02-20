@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { getValidAuthToken } from '../lib/cookies';
 import { authApi } from './apis/authApi';
-import config from "../config/config";
+import config from '../config/config';
 
 const customFetchBaseQuery = (baseUrl, prepareHeaders) => {
   const baseQuery = fetchBaseQuery({ baseUrl, prepareHeaders });
