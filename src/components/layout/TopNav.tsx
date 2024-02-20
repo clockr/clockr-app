@@ -5,7 +5,7 @@ import { logout } from '../../redux/slices/authSlice';
 import IsLoggedIn from '../auth/IsLoggedIn';
 import HasRole from '../auth/HasRole';
 import Stopwatch from '../work/Stopwatch';
-import config from "../../config/config";
+import config from '../../config/config';
 
 const TopNav = () => {
   const dispatch = useAppDispatch();

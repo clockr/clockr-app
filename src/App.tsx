@@ -10,7 +10,7 @@ import SetPassword from './routes/unauthorized/setPassword';
 import ForgotPassword from './routes/unauthorized/forgotPassword';
 import IsLoggedIn from './components/auth/IsLoggedIn';
 import { Helmet } from 'react-helmet';
-import config from "./config/config";
+import config from './config/config';
 
 const routes = createBrowserRouter([
   {
