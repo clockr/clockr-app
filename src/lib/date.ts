@@ -1,7 +1,7 @@
 export function convertFloatToTimeString(hoursFloat) {
   // Separate the hours and the fractional part
-  const hours = Math.floor(hoursFloat);
-  const minutes = Math.round((hoursFloat - hours) * 60);
+  const hours = hoursFloat > 0 ? Math.floor(hoursFloat) : Math.ceil(hoursFloat);
+  const minutes = Math.abs(Math.round((hoursFloat - hours) * 60));
 
   // Format hours and minutes to ensure two digits
   const paddedHours = String(hours).padStart(2, '0');
