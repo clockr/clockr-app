@@ -1,13 +1,15 @@
 import { Outlet } from 'react-router-dom';
 import TopNav from './TopNav';
+import Footer from './Footer';
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
       <TopNav />
-      <div className="container">
+      <div className="container flex-grow-1">
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };
