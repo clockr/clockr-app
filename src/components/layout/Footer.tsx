@@ -1,4 +1,5 @@
 import packageJson from '../../../package.json';
+import config from "../../config/config";
 
 const Footer = () => {
   return (
@@ -7,18 +8,18 @@ const Footer = () => {
         <div className="row">
           <div className="col">Version {packageJson.version}</div>
           <div className="col-auto">
-            {process.env.REACT_APP_IMPRINT_LINK ? (
+            {config.REACT_APP_IMPRINT_LINK ? (
               <a
-                href={process.env.REACT_APP_IMPRINT_LINK}
+                href={config.REACT_APP_IMPRINT_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Impressum
               </a>
             ) : null}
-            {process.env.REACT_APP_PRIVACY_LINK ? (
+            {config.REACT_APP_PRIVACY_LINK ? (
               <a
-                href={process.env.REACT_APP_PRIVACY_LINK}
+                href={config.REACT_APP_PRIVACY_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ms-2"
