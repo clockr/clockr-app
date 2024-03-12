@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import Year from './year';
 import Month from './month';
+import ImportWorkingTimes from './ImportWorkingTimes';
 
 const UserWorkView = ({ id }) => {
   const [currentYear, setCurrentYear] = useState(null);
@@ -67,6 +68,9 @@ const UserWorkView = ({ id }) => {
               })}
             >
               <Month userId={id} year={selectedYear} month={monthNumber} />
+              <div className="mt-3">
+                <ImportWorkingTimes userId={id} />
+              </div>
             </Tab>
           ))}
         </Tabs>
