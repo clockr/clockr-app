@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import DeleteUser from './DeleteUser';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faCrown } from '@fortawesome/free-solid-svg-icons';
 
 const Users = () => {
   const { data: users } = useListUsersQuery();
@@ -48,7 +48,12 @@ const Users = () => {
             <tbody>
               {usersToShow?.map((user, uI) => (
                 <tr key={uI}>
-                  <td>{user.username}</td>
+                  <td>
+                    {user.username}
+                    {user.isAdmin ? (
+                      <FontAwesomeIcon icon={faCrown} className="ms-2" />
+                    ) : null}
+                  </td>
                   <td>
                     {user.lastname}
                     {user.lastname && user.firstname ? ', ' : null}

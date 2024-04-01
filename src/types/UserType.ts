@@ -8,4 +8,5 @@ export type UserType = {
   germanState?: string;
   enabled?: boolean;
   contracts?: ContractType[];
+  isAdmin?: boolean;
 };
