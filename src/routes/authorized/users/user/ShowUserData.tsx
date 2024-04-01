@@ -21,6 +21,10 @@ const ShowUserData = ({ user }) => {
           <td>Bundesland</td>
           <td>{t(`germanStates.${user.germanState}`)}</td>
         </tr>
+        <tr>
+          <td>Administrator</td>
+          <td>{t(`user.isAdmin.${user.isAdmin?.toString()}`)}</td>
+        </tr>
       </tbody>
     </table>
   ) : null;

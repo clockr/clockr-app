@@ -32,5 +32,11 @@
     "HH": "Hamburg",
     "HB": "Bremen",
     "NI": "Niedersachsen"
+  },
+  "user": {
+    "isAdmin": {
+      "true": "Ja",
+      "false": "nein"
+    }
   }
 }

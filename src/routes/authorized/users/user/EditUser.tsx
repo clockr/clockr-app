@@ -18,6 +18,7 @@ const EditUser = ({ user }) => {
     lastname: '',
     germanState: '',
     enabled: true,
+    isAdmin: 'false',
   };
 
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ const EditUser = ({ user }) => {
       firstname: user.firstname,
       lastname: user.lastname,
       germanState: user.germanState ?? 'MV',
+      isAdmin: user.isAdmin?.toString(),
     });
     setErrors(null);
     setOpen(true);
@@ -50,7 +52,13 @@ const EditUser = ({ user }) => {
   const handleSubmit = (e) => {
     e?.preventDefault();
     setErrors(null);
-    doUpdateUser({ id: user.id, payload: formValues })
+    doUpdateUser({
+      id: user.id,
+      payload: {
+        ...formValues,
+        isAdmin: formValues.isAdmin === 'true',
+      },
+    })
       .unwrap()
       .then(() => {
         handleClose();
@@ -100,6 +108,16 @@ const EditUser = ({ user }) => {
               options={germanStates.map((state) => ({
                 value: state,
                 label: t(`germanStates.${state}`),
+              }))}
+            />
+            <SelectInput
+              value={formValues.isAdmin}
+              onChange={(val) => setFormValue('isAdmin', val)}
+              label="Administrator"
+              error={errors?.isAdmin}
+              options={['false', 'true'].map((val) => ({
+                value: val,
+                label: t(`user.isAdmin.${val}`),
               }))}
             />
           </Modal.Body>
