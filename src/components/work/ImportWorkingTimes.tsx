@@ -4,7 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import { Importer, ImporterField, deDE } from 'react-csv-importer';
-import { addDays, parse } from 'date-fns';
+import { addDays, getHours, getMinutes, parse } from 'date-fns';
+
+// Function to convert HH:mm string to hours as float
+function convertToHours(timeString) {
+  // Parse the time string to a Date object, using a reference date
+  const referenceDate = new Date();
+  const time = parse(timeString, 'HH:mm', referenceDate);
+
+  // Extract hours and minutes
+  const hours = getHours(time);
+  const minutes = getMinutes(time);
+
+  // Convert minutes to a fraction of an hour and add to hours
+  return hours + minutes / 60;
+}
 
 const ImportWorkingTimes = ({ userId }) => {
   const [doCreateWorkingTime] = useCreateWorkingTimeMutation();
@@ -72,9 +86,10 @@ const ImportWorkingTimes = ({ userId }) => {
                     'yyyy-MM-dd HH:mm',
                     new Date(),
                   ).toISOString(),
-                  breakTime: row.breakTime
-                    ? parseFloat(row.breakTime?.toString())
-                    : 0,
+                  breakTime:
+                    row.breakTime && row.breakTime.toString().length === 5
+                      ? convertToHours(row.breakTime?.toString())
+                      : 0,
                   note: row.note?.toString(),
                 };
                 if (
