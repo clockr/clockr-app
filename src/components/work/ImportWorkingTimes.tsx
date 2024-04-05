@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import { Importer, ImporterField, deDE } from 'react-csv-importer';
-import { parse } from 'date-fns';
+import { addDays, parse } from 'date-fns';
 
 const ImportWorkingTimes = ({ userId }) => {
   const [doCreateWorkingTime] = useCreateWorkingTimeMutation();
@@ -41,10 +41,13 @@ const ImportWorkingTimes = ({ userId }) => {
             enthalten:
             <ol className="mb-0">
               <li>
-                Beginn <i>Format: yyyy-MM-dd HH:mm</i>
+                Datum <i>Format: yyyy-MM-dd</i>
               </li>
               <li>
-                Ende <i>Format: yyyy-MM-dd HH:mm</i>
+                Beginn <i>Format: HH:mm</i>
+              </li>
+              <li>
+                Ende <i>Format: HH:mm</i>
               </li>
               <li>
                 Pause <i>optional, Beispiel: 0.5 für 30 min Pause</i>
@@ -58,29 +61,40 @@ const ImportWorkingTimes = ({ userId }) => {
             locale={deDE}
             dataHandler={async (rows, { startIndex }) => {
               for (const row of rows) {
+                let dataToSend = {
+                  startAt: parse(
+                    `${row.date?.toString()} ${row.startAt?.toString()}`,
+                    'yyyy-MM-dd HH:mm',
+                    new Date(),
+                  ).toISOString(),
+                  endAt: parse(
+                    `${row.date?.toString()} ${row.endAt?.toString()}`,
+                    'yyyy-MM-dd HH:mm',
+                    new Date(),
+                  ).toISOString(),
+                  breakTime: row.breakTime
+                    ? parseFloat(row.breakTime?.toString())
+                    : 0,
+                  note: row.note?.toString(),
+                };
+                if (
+                  dataToSend.endAt?.length > 0 &&
+                  new Date(dataToSend.endAt) < new Date(dataToSend.startAt)
+                ) {
+                  dataToSend.endAt = addDays(
+                    new Date(dataToSend.endAt),
+                    1,
+                  ).toISOString();
+                }
                 await doCreateWorkingTime({
                   userId,
-                  payload: {
-                    startAt: parse(
-                      row.startAt?.toString(),
-                      'yyyy-MM-dd HH:mm',
-                      new Date(),
-                    ).toISOString(),
-                    endAt: parse(
-                      row.endAt?.toString(),
-                      'yyyy-MM-dd HH:mm',
-                      new Date(),
-                    ).toISOString(),
-                    breakTime: row.breakTime
-                      ? parseFloat(row.breakTime?.toString())
-                      : 0,
-                    note: row.note?.toString(),
-                  },
+                  payload: dataToSend,
                 });
               }
             }}
             restartable={true}
           >
+            <ImporterField name="date" label="Datum" />
             <ImporterField name="startAt" label="Beginn" />
             <ImporterField name="endAt" label="Ende" />
             <ImporterField name="breakTime" label="Pause" optional />
