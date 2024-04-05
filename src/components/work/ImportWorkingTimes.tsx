@@ -64,7 +64,7 @@ const ImportWorkingTimes = ({ userId }) => {
                 Ende <i>Format: HH:mm</i>
               </li>
               <li>
-                Pause <i>optional, Beispiel: 0.5 für 30 min Pause</i>
+                Pause <i>optional, Beispiel: 00:30 für 30 min Pause</i>
               </li>
               <li>
                 Beschreibung <i>optional</i>
