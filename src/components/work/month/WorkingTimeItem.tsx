@@ -36,6 +36,7 @@ const WorkingTimeItem = ({
   addItem,
   showAddItem,
   handleEmptyDelete,
+  disabled,
 }) => {
   const { workingTimeItem: itemFromStopwatchState } = useAppSelector(
     (state) => state.stopwatch,
@@ -139,10 +140,13 @@ const WorkingTimeItem = ({
   };
 
   const isDisabled = useMemo(() => {
-    return itemFromStopwatchState?.id && item?.id
-      ? itemFromStopwatchState.id === item.id
-      : false;
-  }, [item?.id, itemFromStopwatchState?.id]);
+    return (
+      disabled ||
+      (itemFromStopwatchState?.id && item?.id
+        ? itemFromStopwatchState.id === item.id
+        : false)
+    );
+  }, [item?.id, itemFromStopwatchState?.id, disabled]);
 
   return (
     <div className="d-flex align-items-center">
@@ -152,6 +156,7 @@ const WorkingTimeItem = ({
             type="button"
             className="btn btn-sm btn-link"
             onClick={addItem}
+            disabled={disabled}
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>

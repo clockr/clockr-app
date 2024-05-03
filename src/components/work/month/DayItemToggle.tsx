@@ -4,7 +4,7 @@ import {
 } from '../../../redux/apis/dayItemApi';
 import { Form } from 'react-bootstrap';
 
-const DayItemToggle = ({ item, itemType, userId, date }) => {
+const DayItemToggle = ({ item, itemType, userId, date, disabled }) => {
   const [doCreateDayItem, { isLoading: isLoadingCreate }] =
     useCreateDayItemMutation();
   const [doDeleteDayItem, { isLoading: isLoadingDelete }] =
@@ -26,7 +26,7 @@ const DayItemToggle = ({ item, itemType, userId, date }) => {
       type="checkbox"
       checked={!!item}
       onChange={handleChange}
-      disabled={isLoadingCreate || isLoadingDelete}
+      disabled={disabled || isLoadingCreate || isLoadingDelete}
     />
   );
 };
