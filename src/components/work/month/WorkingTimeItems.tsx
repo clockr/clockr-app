@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const WorkingTimeItems = ({ userId, day }) => {
+const WorkingTimeItems = ({ userId, day, disabled }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const WorkingTimeItems = ({ userId, day }) => {
               addItem={addItem}
               showAddItem={iI === items.length - 1 && item?.id}
               handleEmptyDelete={removeItem}
+              disabled={disabled}
             />
           ))
       ) : (
@@ -54,6 +55,7 @@ const WorkingTimeItems = ({ userId, day }) => {
             type="button"
             className="btn btn-sm btn-link"
             onClick={addItem}
+            disabled={disabled}
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>

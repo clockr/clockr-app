@@ -103,6 +103,28 @@ export const userManagementApi = appApi.injectEndpoints({
         { type: 'USER_YEAR' },
       ],
     }),
+    lockMonth: builder.mutation<
+      boolean,
+      { userId: number; year: number; month: number }
+    >({
+      query: ({ userId, year, month }) => ({
+        url: `/user-management/${userId}/lock-month/${year}/${month}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: { data: any }, meta, arg) => response.data,
+      invalidatesTags: (result, error, arg) => [{ type: 'USER_MONTH' }],
+    }),
+    unlockMonth: builder.mutation<
+      boolean,
+      { userId: number; year: number; month: number }
+    >({
+      query: ({ userId, year, month }) => ({
+        url: `/user-management/${userId}/lock-month/${year}/${month}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: { data: any }, meta, arg) => response.data,
+      invalidatesTags: (result, error, arg) => [{ type: 'USER_MONTH' }],
+    }),
   }),
 });
 
@@ -115,4 +137,6 @@ export const {
   useCreateContractMutation,
   useUpdateContractMutation,
   useDeleteContractMutation,
+  useLockMonthMutation,
+  useUnlockMonthMutation,
 } = userManagementApi;

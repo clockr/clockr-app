@@ -4,12 +4,19 @@ import { de } from 'date-fns/locale';
 import DayItemToggle from './DayItemToggle';
 import WorkingTimeItems from './WorkingTimeItems';
 import { convertFloatToTimeString } from '../../../lib/date';
+import HasRole from '../../auth/HasRole';
+import LockMonth from './LockMonth';
 
 const Month = ({ userId, year, month }) => {
   const { data } = useGetMonthQuery({ id: userId, year: year, month: month });
 
   return data ? (
     <>
+      <HasRole role="ROLE_ADMIN">
+        <div className="mt-3 mb-3">
+          <LockMonth userId={userId} year={year} month={month} />
+        </div>
+      </HasRole>
       <div className="table-responsive mt-4">
         <table className="table">
           <thead>
@@ -31,7 +38,11 @@ const Month = ({ userId, year, month }) => {
                 <td className={day.isWorkingDay ? '' : 'bg-light'}>
                   <div className="d-flex">
                     <div>
-                      <WorkingTimeItems day={day} userId={userId} />
+                      <WorkingTimeItems
+                        day={day}
+                        userId={userId}
+                        disabled={data.isLocked}
+                      />
                     </div>
                     <div className="ms-auto me-2">
                       {convertFloatToTimeString(day.isHours)}
@@ -44,6 +55,7 @@ const Month = ({ userId, year, month }) => {
                     itemType="VACATION"
                     date={new Date(day.date)}
                     userId={userId}
+                    disabled={data.isLocked}
                   />
                 </td>
                 <td className={day.isWorkingDay ? '' : 'bg-light'}>
@@ -52,6 +64,7 @@ const Month = ({ userId, year, month }) => {
                     itemType="ILLNESS"
                     date={new Date(day.date)}
                     userId={userId}
+                    disabled={data.isLocked}
                   />
                 </td>
                 <td className={day.isWorkingDay ? '' : 'bg-light'}>
@@ -60,6 +73,7 @@ const Month = ({ userId, year, month }) => {
                     itemType="BREAKFAST"
                     date={new Date(day.date)}
                     userId={userId}
+                    disabled={data.isLocked}
                   />
                 </td>
                 <td className={day.isWorkingDay ? '' : 'bg-light'}>
@@ -68,6 +82,7 @@ const Month = ({ userId, year, month }) => {
                     itemType="LUNCH"
                     date={new Date(day.date)}
                     userId={userId}
+                    disabled={data.isLocked}
                   />
                 </td>
               </tr>
