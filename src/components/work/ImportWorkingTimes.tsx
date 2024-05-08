@@ -74,6 +74,11 @@ const ImportWorkingTimes = ({ userId }) => {
           <Importer
             locale={deDE}
             dataHandler={async (rows, { startIndex }) => {
+              rows = rows?.filter(
+                (r) =>
+                  r.startAt?.toString()?.length > 0 &&
+                  r.endAt?.toString()?.length > 0,
+              );
               for (const row of rows) {
                 let dataToSend = {
                   startAt: parse(
