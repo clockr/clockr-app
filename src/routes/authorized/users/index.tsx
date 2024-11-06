@@ -10,11 +10,13 @@ const Users = () => {
   const { data: users } = useListUsersQuery();
 
   const [usersToShow, setUsersToShow] = useState([]);
+  const [showArchivedUsers, setShowArchivedUsers] = useState(false);
 
   useEffect(() => {
     if (users) {
       setUsersToShow(
         users
+          ?.filter((u) => (showArchivedUsers ? true : !u.isArchived))
           ?.slice()
           ?.sort((a, b) =>
             `${a.lastname}${a.firstname}`
@@ -23,13 +25,24 @@ const Users = () => {
           ),
       );
     }
-  }, [users]);
+  }, [users, showArchivedUsers]);
 
   return (
     <div className="mt-4">
       <div className="row">
         <div className="col-12 col-md-8">
           <h4>Benutzerverwaltung</h4>
+          <div className="form-check form-switch">
+            <label className="form-check-label">
+              <input
+                type="checkbox"
+                checked={showArchivedUsers}
+                onChange={() => setShowArchivedUsers(!showArchivedUsers)}
+                className="form-check-input"
+              />
+              Archivierte Benutzer anzeigen
+            </label>
+          </div>
         </div>
         <div className="col-12 col-md-4 text-end">
           <CreateUser />

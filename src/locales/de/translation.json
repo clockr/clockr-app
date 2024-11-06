@@ -35,7 +35,11 @@
   },
   "user": {
     "isAdmin": {
-      "true": "Ja",
+      "true": "ja",
+      "false": "nein"
+    },
+    "isArchived": {
+      "true": "ja",
       "false": "nein"
     }
   }
