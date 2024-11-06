@@ -25,6 +25,10 @@ const ShowUserData = ({ user }) => {
           <td>Administrator</td>
           <td>{t(`user.isAdmin.${user.isAdmin?.toString()}`)}</td>
         </tr>
+        <tr>
+          <td>Archiviert</td>
+          <td>{t(`user.isArchived.${user.isArchived?.toString()}`)}</td>
+        </tr>
       </tbody>
     </table>
   ) : null;

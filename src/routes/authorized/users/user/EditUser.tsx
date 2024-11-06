@@ -19,6 +19,7 @@ const EditUser = ({ user }) => {
     germanState: '',
     enabled: true,
     isAdmin: 'false',
+    isArchived: 'false',
   };
 
   const [open, setOpen] = useState(false);
@@ -33,6 +34,7 @@ const EditUser = ({ user }) => {
       lastname: user.lastname,
       germanState: user.germanState ?? 'MV',
       isAdmin: user.isAdmin?.toString(),
+      isArchived: user.isArchived?.toString(),
     });
     setErrors(null);
     setOpen(true);
@@ -57,6 +59,7 @@ const EditUser = ({ user }) => {
       payload: {
         ...formValues,
         isAdmin: formValues.isAdmin === 'true',
+        isArchived: formValues.isArchived === 'true',
       },
     })
       .unwrap()
@@ -118,6 +121,16 @@ const EditUser = ({ user }) => {
               options={['false', 'true'].map((val) => ({
                 value: val,
                 label: t(`user.isAdmin.${val}`),
+              }))}
+            />
+            <SelectInput
+              value={formValues.isArchived}
+              onChange={(val) => setFormValue('isArchived', val)}
+              label="Archiviert"
+              error={errors?.isArchived}
+              options={['false', 'true'].map((val) => ({
+                value: val,
+                label: t(`user.isArchived.${val}`),
               }))}
             />
           </Modal.Body>

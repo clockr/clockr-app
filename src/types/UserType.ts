@@ -9,4 +9,5 @@ export type UserType = {
   enabled?: boolean;
   contracts?: ContractType[];
   isAdmin?: boolean;
+  isArchived?: boolean;
 };
