@@ -16,6 +16,7 @@ const CreateUser = () => {
     lastname: '',
     germanState: 'MV',
     enabled: true,
+    isArchived: false,
   };
 
   const [open, setOpen] = useState(false);
