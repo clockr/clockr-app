@@ -6,15 +6,36 @@ import WorkingTimeItems from './WorkingTimeItems';
 import { convertFloatToTimeString } from '../../../lib/date';
 import HasRole from '../../auth/HasRole';
 import LockMonth from './LockMonth';
+import { generateMonthPdf } from '../../../utils/generatePdf';
+import { useLazyGetUserQuery } from '../../../redux/apis/userManagementApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 
 const Month = ({ userId, year, month }) => {
   const { data } = useGetMonthQuery({ id: userId, year: year, month: month });
+  const [doLoadUser] = useLazyGetUserQuery();
+
+  const doExportPdf = async () => {
+    const userData = await doLoadUser(userId).unwrap();
+    generateMonthPdf(userData, data, month, year);
+  };
 
   return data ? (
     <>
       <HasRole role="ROLE_ADMIN">
-        <div className="mt-3 mb-3">
-          <LockMonth userId={userId} year={year} month={month} />
+        <div className="row mt-3 mb-3 align-items-center">
+          <div className="col">
+            <LockMonth userId={userId} year={year} month={month} />
+          </div>
+          <div className="col-auto">
+            <button
+              className="btn btn-outline-primary btn-sm"
+              onClick={doExportPdf}
+            >
+              <FontAwesomeIcon icon={faFilePdf} className="me-2" />
+              Exportieren als PDF
+            </button>
+          </div>
         </div>
       </HasRole>
       <div className="table-responsive mt-4">
