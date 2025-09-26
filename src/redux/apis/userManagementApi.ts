@@ -131,6 +131,7 @@ export const userManagementApi = appApi.injectEndpoints({
 export const {
   useListUsersQuery,
   useGetUserQuery,
+  useLazyGetUserQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
