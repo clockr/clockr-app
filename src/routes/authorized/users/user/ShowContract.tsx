@@ -2,6 +2,7 @@ import { addDays, format, startOfWeek } from 'date-fns';
 import { de } from 'date-fns/locale';
 import DeleteContract from './DeleteContract';
 import EditContract from './EditContract';
+import formatNumberDE from '../../../../utils/formatNumber';
 
 const ShowContract = ({ contract }) => {
   return (
@@ -24,7 +25,7 @@ const ShowContract = ({ contract }) => {
           <DeleteContract contract={contract} />
         </div>
       </div>
-      <div>{contract.hoursPerWeek} Stunden pro Woche</div>
+      <div>{formatNumberDE(contract.hoursPerWeek)} Stunden pro Woche</div>
       <div>{contract.vacationDaysPerYear} Urlaubstage pro Jahr</div>
       <div>
         Arbeitstage:{' '}

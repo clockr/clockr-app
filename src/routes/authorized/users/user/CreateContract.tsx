@@ -46,7 +46,7 @@ const CreateContract = ({ user }) => {
       userId: user?.id,
       payload: {
         ...formValues,
-        hoursPerWeek: parseInt(formValues.hoursPerWeek),
+        hoursPerWeek: parseFloat(formValues.hoursPerWeek),
         vacationDaysPerYear: parseInt(formValues.vacationDaysPerYear),
         startAt: formValues.startAt
           ? parse(formValues.startAt, 'yyyy-MM-dd', new Date())?.toISOString()
