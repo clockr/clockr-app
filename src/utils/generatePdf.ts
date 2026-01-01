@@ -30,13 +30,13 @@ interface Day {
 }
 
 interface MonthResult {
-  targetHours: string;
-  isHours: string;
+  targetHours: number;
+  isHours: number;
   breakfastCount: number;
   lunchCount: number;
   illnessCount: number;
   vacationCount: number;
-  difference: string;
+  difference: number;
 }
 
 interface MonthData {
